@@ -10,23 +10,29 @@ contract Token is ERC20 {
     constructor(
         string memory name,
         string memory symbol,
-        uint256 mintAmount,
-        uint256 _feePercent
+        uint256 initialSupply,
+        uint256 _feePercent,
+        address _feeCollector
     ) ERC20(name, symbol) {
-        feeCollector = msg.sender;
-        feePercent = _feePercent;
-        _mint(msg.sender, mintAmount * 10 ** decimals());
+        feeCollector = _feeCollector;
+        feePercent   = _feePercent;
+        _mint(msg.sender, initialSupply);
     }
 
-    function _transfer(
-        address sender,
-        address recipient,
+    function _update(
+        address from,
+        address to,
         uint256 amount
     ) internal override {
-        uint256 fee = (amount * feePercent) / 10000;
-        uint256 amountAfterFee = amount - fee;
+        if (from == address(0) || to == address(0) || to == feeCollector) {
+            super._update(from, to, amount);
+            return;
+        }
 
-        super._transfer(sender, feeCollector, fee);
-        super._transfer(sender, recipient, amountAfterFee);
+        uint256 fee = (amount * feePercent) / 10000;
+        uint256 net = amount - fee;
+
+        super._update(from, feeCollector, fee);
+        super._update(from, to, net);
     }
 }

@@ -1,17 +1,25 @@
+require("dotenv").config();
 const hre = require("hardhat");
 
 async function main() {
-  const name = "FeeToken";
-  const symbol = "FEE";
-  const initialSupply = hre.ethers.parseUnits("1000000", 18); // 1M tokens
-  const feePercent = 1000; // 10%
+  const name = process.env.TOKEN_NAME;
+  const symbol = process.env.TOKEN_SYMBOL;
+  const initialSupply = hre.ethers.parseUnits(process.env.TOKEN_SUPPLY, 18);
+  const feePercent = parseInt(process.env.FEE_PERCENT);
+  const feeCollector = process.env.FEE_COLLECTOR;
 
-  const FeeToken = await hre.ethers.getContractFactory("FeeToken");
-  const token = await FeeToken.deploy(name, symbol, initialSupply, feePercent);
+  const Token = await hre.ethers.getContractFactory("Token");
+  const token = await Token.deploy(
+    name,
+    symbol,
+    initialSupply,
+    feePercent,
+    feeCollector
+  );
 
   await token.waitForDeployment();
 
-  console.log(`Token deployed to: ${token.target}`);
+  console.log(`Token deployed to: ${await token.getAddress()}`);
 }
 
 main().catch((error) => {
