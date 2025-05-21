@@ -199,8 +199,3 @@ contract Token is ERC20 {
 - **`feePercent`**: fee rate in basis points, so a value of `1000` equals **10%**.  
 
 ---
-
-## License
-
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
-
