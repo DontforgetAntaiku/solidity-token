@@ -1,6 +1,3 @@
-Based on the latest updates in the [DontforgetAntaiku/solidity-token](https://github.com/DontforgetAntaiku/solidity-token) repository, here's an updated `README.md` that reflects the current state of the project:
-
----
 
 # Solidity Token
 
