@@ -1,3 +1,7 @@
+Based on the latest updates in the [DontforgetAntaiku/solidity-token](https://github.com/DontforgetAntaiku/solidity-token) repository, here's an updated `README.md` that reflects the current state of the project:
+
+---
+
 # Solidity Token
 
 A simple ERC‑20 token with a built‑in transfer fee, powered by Hardhat.
@@ -15,7 +19,6 @@ A simple ERC‑20 token with a built‑in transfer fee, powered by Hardhat.
 * [Contract Architecture](#contract-architecture)
 * [Usage](#usage)
 * [Contributing](#contributing)
-* [License](#license)
 
 ---
 
@@ -25,109 +28,104 @@ This repository implements an ERC‑20 token in Solidity (v0.8.20) that charges 
 
 ## Features
 
-* Standard ERC‑20 interface (OpenZeppelin).
-* **Transfer Fee**: Deducts a % (basis points) on every transfer.
-* Immutable configuration: name, symbol, supply, and fee rate set at deployment.
-* Hardhat framework for compilation, testing, and scripting.
+* Standard ERC‑20 interface (OpenZeppelin-based)
+* Transfer fee mechanism (configurable in basis points)
+* Fee collection directed to the deployer's address
+* Built-in tests using Hardhat and Mocha
+* Deployment scripts included
 
 ## Prerequisites
 
-* Node.js (>=16.x)
+* Node.js (v16 or later)
 * npm or yarn
-* An Ethereum JSON‑RPC endpoint URL (e.g. Alchemy, Infura)
-* A wallet private key with funds for gas
+* Hardhat
 
 ## Installation
 
 ```bash
-# Clone
 git clone https://github.com/DontforgetAntaiku/solidity-token.git
 cd solidity-token
-
-# Install dependencies
 npm install
-# or
-yarn install
 ```
+
+
 
 ## Configuration
 
-1. **Environment Variables**
+Create a `.env` file in the root directory based on the provided `.env.example`.
 
-   Rename `.env.example` to `.env` and set your private key:
+```bash
+cp .env.example .env
+```
 
-   ```ini
-   # .env
-   PRIVATE_KEY=yourprivatekey
-   API_KEY=yourapikeyofinfura
-   TOKEN_NAME=name
-   TOKEN_SYMBOL=symbol
-   TOKEN_SUPPLY=1000000
-   FEE_PERCENT=1000 # 10%
-   FEE_COLLECTOR=youraddress
-   ```
 
-2. **hardhat.config.js**
 
-   Update the `rinkeby` network (or add others) with your RPC URL and private key:
-
-   ```js
-   networks: {
-     hardhat: {},
-     rinkeby: {
-       url: URL,
-       accounts: [process.env.PRIVATE_KEY],
-     },
-   }
-   ```
+Update the `.env` file with your private key and desired network configurations.
 
 ## Local Development
 
-Launch a local Hardhat node and deploy:
+Start a local Hardhat node:
 
 ```bash
-# Start local node (fork or fresh)
 npx hardhat node
+```
 
-# In a new terminal, deploy to localhost
+
+
+Deploy the contract to the local network:
+
+```bash
 npx hardhat run scripts/deploy.js --network localhost
 ```
 
-Contracts will be deployed to `http://127.0.0.1:8545` and you can interact via the provided addresses.
+
 
 ## Compilation & Testing
 
-Compile contracts:
+To compile the contracts:
 
 ```bash
 npx hardhat compile
 ```
 
-Run tests:
+
+
+To run tests:
 
 ```bash
 npx hardhat test
 ```
+
+
+
+## Deployment
+
+To deploy the contract to a testnet (e.g., Sepolia):
+
+```bash
+npx hardhat run scripts/deploy.js --network sepolia
+```
+
+
+
+Ensure your `.env` file contains the appropriate API keys and private key for deployment.
+
 ## Contract Architecture
 
-* **contracts/token.sol** inherits from OpenZeppelin's `ERC20`.
-* Overrides `_transfer` to:
+The contract is located in `contracts/Token.sol` and includes:
 
-  1. Calculate `fee = (amount * feePercent) / 10_000`.
-  2. Transfer `fee` to `feeCollector` (deployer).
-  3. Transfer `amount - fee` to the recipient.
+* ERC‑20 standard functions
+* A transfer fee mechanism where a percentage of each transfer is sent to the deployer's address
+* Configurable fee percentage set during deployment
 
-Key constructor parameters:
+## Usage
 
-```solidity
-constructor(
-  string memory name_,
-  string memory symbol_,
-  uint256 initialSupply_,
-  uint256 feePercent_ // in basis points (bps)
-) ERC20(name_, symbol_) {
-  feeCollector = msg.sender;
-  feePercent = feePercent_;
-  _mint(msg.sender, initialSupply_);
-}
-```
+After deployment, you can interact with the contract using Hardhat scripts or through a frontend interface. Key functions include:
+
+* `transfer`: Transfer tokens to another address, applying the transfer fee.
+* `balanceOf`: Check the token balance of an address.
+* `totalSupply`: View the total supply of tokens.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
