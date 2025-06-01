@@ -4,7 +4,8 @@ async function main() {
   const accounts = await hre.ethers.getSigners();
 
   for (const account of accounts) {
-    const token = await hre.ethers.getContractAt("Token", "TOKEN_ADDRESS");
+    const token = await hre.ethers.getContractAt("Token", process.env.TOKEN_ADDRESS);
+    console.log(account.address)
     const tokenBalance = await token.balanceOf(account.address);
     console.log(
       `${account.address} has ${hre.ethers.formatUnits(

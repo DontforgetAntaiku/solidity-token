@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/dontforgetantaiku/own_projects/token/contracts/token.sol": {
-      "lastModificationDate": 1747780871083,
-      "contentHash": "2ba3757e13ac07f577f5d78c273daf2b",
+      "lastModificationDate": 1747826117088,
+      "contentHash": "01f13705235ed2e89f6f033d420852ee",
       "sourceName": "contracts/token.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -226,6 +226,42 @@
       ],
       "artifacts": [
         "IERC20Metadata"
+      ]
+    },
+    "/home/dontforgetantaiku/own_projects/token/contracts/interfaces/IUniswapV2Factory.sol": {
+      "lastModificationDate": 1748616116270,
+      "contentHash": "244e27c77cb8080ab771e29cd87c8e26",
+      "sourceName": "contracts/interfaces/IUniswapV2Factory.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IUniswapV2Factory"
       ]
     }
   }

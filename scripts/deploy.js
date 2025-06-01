@@ -7,6 +7,10 @@ async function main() {
   const initialSupply = hre.ethers.parseUnits(process.env.TOKEN_SUPPLY, 18);
   const feePercent = parseInt(process.env.FEE_PERCENT);
   const feeCollector = process.env.FEE_COLLECTOR;
+  const [deployer] = await hre.ethers.getSigners();
+  console.log("Running deploy script on network:", hre.network.name);
+  console.log("Deploying with address:", deployer.address);
+  console.log("On‑chain balance:", hre.ethers.formatEther(await deployer.provider.getBalance(deployer.address)));
 
   const Token = await hre.ethers.getContractFactory("Token");
   const token = await Token.deploy(
